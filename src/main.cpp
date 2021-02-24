@@ -1,28 +1,67 @@
 /**
  * @file main.cpp
- * @brief This is a test of CMake, doxygen, and GitHub.
- * @details This is the long brief at the top of main.cpp.
+ * @brief This is a demonstration of simple binary trees
+ * @details This is a demo from CPTR 227 class
  * @author Seth McNeill
- * @date 1/28/2021
+ * @date 2021 February 24
  * 
  */
 
 #include <iostream>
-
+using namespace std;
 
 /**
- * Add two integers (brief)
+ * Binary Tree Node
  * 
- * Adds a and b, two integers (long description)
- * @param a integer
- * @param b integer
- * @returns integer sum of a and b
+ * This is from Open Data Structures in C++ by Pat Morin
  */
-int add(int a, int b) {
-    return(a + b);
+class BTNode {
+public:
+  BTNode* left;
+  BTNode* right;
+  BTNode* parent;
+
+  /**
+   * BTNode constructor
+   */
+  BTNode() {
+      left = NULL;
+      right = NULL;
+      parent = NULL;
+  }
+};
+
+/**
+ * This generates a simple tree to play with
+ * 
+ * It is a bit of a hack.
+ */
+BTNode* genExampleTree(BTNode* root) {
+    BTNode* one = new BTNode();
+    BTNode* two = new BTNode();
+    BTNode* three = new BTNode();
+    BTNode* four = new BTNode();
+    BTNode* five = new BTNode();
+    BTNode* six = new BTNode();
+    cout << "Created the nodes" << endl;
+    root->left = one;
+    cout << "Added root->left" << endl;
+    one->parent = root;
+    root->right = two;
+    two->parent = root;
+    two->left = three;
+    three->parent = two;
+    two->right = four;
+    four->parent = two;
+    one->left = five;
+    five->parent = one;
+    five->left = six;
+    six->parent = five;
+    return root;
 }
 
-
 int main(int, char**) {
-    std::cout << "Hello, world! Ver 2.1\n";
+    BTNode* rootNode; // pointer to the root node
+    genExampleTree(rootNode);
+    cout << "Hello, world! Binary Trees\n";
 }

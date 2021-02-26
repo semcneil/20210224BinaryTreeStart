@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "bglmpr",
   1: "b",
   2: "m",
-  3: "bgm",
+  3: "bgmp",
   4: "lpr"
 };
 

@@ -29,6 +29,10 @@ public:
       right = NULL;
       parent = NULL;
   }
+
+  void printTree(){
+      cout << "this prints something" << endl;
+  }
 };
 
 /**
@@ -44,6 +48,10 @@ BTNode* genExampleTree(BTNode* root) {
     BTNode* five = new BTNode();
     BTNode* six = new BTNode();
     cout << "Created the nodes" << endl;
+    root->printTree();
+    one->printTree();
+    cout << root->left << endl;
+    cout << "printed root->left" << endl;
     root->left = one;
     cout << "Added root->left" << endl;
     one->parent = root;
@@ -61,7 +69,7 @@ BTNode* genExampleTree(BTNode* root) {
 }
 
 int main(int, char**) {
-    BTNode* rootNode; // pointer to the root node
+    BTNode* rootNode = new BTNode(); // pointer to the root node
     genExampleTree(rootNode);
     cout << "Hello, world! Binary Trees\n";
 }

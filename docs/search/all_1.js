@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['genexampletree_1',['genExampleTree',['../main_8cpp.html#a5e961e1e7556c0cc58422c395a7c024d',1,'main.cpp']]]
+  ['count_1',['count',['../classBTNode.html#a10826e9a79707f2effdaad619fa14a50',1,'BTNode']]]
 ];

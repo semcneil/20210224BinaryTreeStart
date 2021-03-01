@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right_14',['right',['../classBTNode.html#af601e8fb1ad88e48379281bc47e5cb95',1,'BTNode']]]
+  ['num_22',['num',['../classBTNode.html#ae0690ecf979fa93f805a2003b0f19176',1,'BTNode']]]
 ];

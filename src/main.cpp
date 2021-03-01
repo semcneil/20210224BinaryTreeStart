@@ -20,6 +20,8 @@ public:
   BTNode* left;
   BTNode* right;
   BTNode* parent;
+  int num; // The object number created
+  static int count;
 
   /**
    * BTNode constructor
@@ -28,8 +30,51 @@ public:
       left = NULL;
       right = NULL;
       parent = NULL;
+      num = count++;
+  }
+
+    /**
+     * This reports the node's number
+     */
+  int nodeNum() {
+      return(num);
   }
 };
+
+
+int BTNode::count = 0; // initialize static variable
+
+
+/**
+ * Calculates the depth (number of steps between node and root) of a node
+ * 
+ * @param pointer to BTNode to measure the depth of
+ * @returns integer count of depth
+ */
+int depth(BTNode* u) {
+    int d = 0; // depth counter
+    while(u != NULL) {
+        u = u->parent;
+        d++;
+    }
+    return(--d);
+}
+
+
+/**
+ * This calculates the height (max number of steps until leaf node)
+ * 
+ * @param pointer to a BTNode
+ * @returns integer count of height
+ */
+int height(BTNode* u) {
+    if (u == NULL) {
+        cout << "Reached NULL end of branch" << endl;
+        return(-1);
+    }
+    cout << "Calculating the height of node " << u->nodeNum() << endl;
+    return(1 + max(height(u->left), height(u->right)));
+}
 
 /**
  * This generates a simple tree to play with
@@ -57,11 +102,21 @@ BTNode* genExampleTree(BTNode* root) {
     five->parent = one;
     five->left = six;
     six->parent = five;
+    cout << "root's number: " << root->nodeNum() << endl;
+    cout << "one's number: " << one->nodeNum() << endl;
+    cout << "two's number: " << two->nodeNum() << endl;
+    cout << "three's number: " << three->nodeNum() << endl;
+    cout << "four's number: " << four->nodeNum() << endl;
+    cout << "five's number: " << five->nodeNum() << endl;
+    cout << "six's number: " << six->nodeNum() << endl;
+    cout << "six's depth is " << depth(six) << endl;
+    cout << "root's height is " << height(root) << endl;
     return root;
 }
 
+
 int main(int, char**) {
-    BTNode* rootNode; // pointer to the root node
+    BTNode* rootNode = new BTNode(); // pointer to the root node
     genExampleTree(rootNode);
     cout << "Hello, world! Binary Trees\n";
 }

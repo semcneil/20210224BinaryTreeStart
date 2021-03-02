@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(BinaryTrees1 VERSION 0.1.0)
+project(BinaryTrees1 VERSION 0.2.0)
 
 set(PROJECT_SOURCE_DIR "src")
 set(DOXYGEN_OUPUT_DIR "doxygen")
@@ -8,6 +8,7 @@ set(DOXYGEN_IN_FILE "Doxyfile.in")
 # Be sure to change the executable name, 
 # and change the input file name if it is different.
 add_executable(binTree ${PROJECT_SOURCE_DIR}/main.cpp)
+add_executable(binSearch ${PROJECT_SOURCE_DIR}/binSearch.cpp)
 
 include(CTest)
 enable_testing()

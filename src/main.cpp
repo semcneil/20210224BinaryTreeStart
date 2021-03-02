@@ -62,6 +62,56 @@ int depth(BTNode* u) {
 
 
 /**
+ * Traverses all the nodes in a binary tree.
+ * 
+ * @param A pointer to the root node of interest
+ */
+void traverse(BTNode* rootNode) {
+    if(rootNode == NULL) {
+        cout << "reached NULL" << endl;
+        return;
+    }
+    cout << "Traversing node " << rootNode->nodeNum() << endl;
+    traverse(rootNode->right);
+    traverse(rootNode->left);
+}
+
+
+/**
+ * Traverses all nodes in a binary tree non-recursively
+ * 
+ * @param A pointer to the root node of interest
+ */
+void nonRecursiveTraverse(BTNode* rootNode) {
+    BTNode* u = rootNode; // Current node of interest
+    BTNode* prev = NULL;  // Previously looked at node
+    BTNode* next;         // The next node to look at
+
+    while(u != NULL) {
+        cout << "Traversing node " << u->nodeNum() << endl;
+        if(prev ==  u->parent) {
+            if(u->right != NULL) {
+                next = u->right;
+            } else if(u->left != NULL) {
+                next = u->left;
+            } else {
+                next = u->parent;
+            }
+        } else if(prev == u->right) {
+            if(u->left != NULL){
+                next = u->left;
+            } else {
+                next = u->parent;
+            }
+        } else {
+            next = u->parent;
+        }
+        prev = u;
+        u = next;
+    }
+}
+
+/**
  * This calculates the height (max number of steps until leaf node)
  * 
  * @param pointer to a BTNode
@@ -118,5 +168,8 @@ BTNode* genExampleTree(BTNode* root) {
 int main(int, char**) {
     BTNode* rootNode = new BTNode(); // pointer to the root node
     genExampleTree(rootNode);
-    cout << "Hello, world! Binary Trees\n";
+    cout << endl << "Traversing the binary tree" << endl;
+    traverse(rootNode);
+    cout << endl << "Non-recursive traversing" << endl;
+    nonRecursiveTraverse(rootNode);
 }

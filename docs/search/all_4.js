@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['height_4',['height',['../main_8cpp.html#a8eae204426d2d5d1e9704d8690f4c8a8',1,'main.cpp']]]
+  ['genexampletree_5',['genExampleTree',['../binSearch_8cpp.html#a5e961e1e7556c0cc58422c395a7c024d',1,'genExampleTree(BTNode *root):&#160;binSearch.cpp'],['../main_8cpp.html#a5e961e1e7556c0cc58422c395a7c024d',1,'genExampleTree(BTNode *root):&#160;main.cpp']]]
 ];

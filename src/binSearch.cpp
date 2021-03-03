@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <queue>
 using namespace std;
 
 /**
@@ -16,6 +17,11 @@ using namespace std;
  * This is from Open Data Structures in C++ by Pat Morin
  */
 class BTNode {
+private:
+  char objName; // The object number created
+  static char name;
+  int payload; // Data that is stored in the node
+
 public:
   BTNode* left;
   BTNode* right;
@@ -25,32 +31,28 @@ public:
    * BTNode constructor
    */
   BTNode(int dataVal) {
-      cout << "name = " << name << endl;
       left = NULL;
       right = NULL;
       parent = NULL;
       objName = name++;
-      data = dataVal;
+      payload = dataVal;
+      cout << "name = " << name << ", payload = " << payload << endl;
   }
 
-    /**
-     * This reports the node's name
-     */
+  /**
+   * This reports the node's name
+   */
   char nodeName() {
       return(objName);
   }
 
-    /**
-     * This reports the node's data
-     */
-  char nodeData() {
-      return(data);
+  /**
+   * This reports the node's data
+   */
+  int nodeData() {
+      return(payload);
   }
 
-private:
-  char objName; // The object number created
-  static char name;
-  int data; // Data that is stored in the node
 };
 
 
@@ -101,6 +103,7 @@ BTNode* addNode(BTNode* rootNode, BTNode* n) {
  */
 BTNode* addNode(BTNode* rootNode, int dataval) {
     BTNode* newNode = new BTNode(dataval);
+    cout << "newNode " << newNode->nodeName() << ":" << newNode->nodeData() << endl;
     if(addNode(rootNode, newNode) == NULL) {
         cout << dataval << " already in tree" << endl;
     } else {
@@ -115,38 +118,114 @@ BTNode* addNode(BTNode* rootNode, int dataval) {
  * It is a bit of a hack.
  */
 BTNode* genExampleTree(BTNode* root) {
-/*    BTNode* one = new BTNode(1);
-    BTNode* two = new BTNode(2);
-    BTNode* three = new BTNode(3);
-    BTNode* four = new BTNode(4);
-    BTNode* five = new BTNode(5);
-    BTNode* six = new BTNode(6);
-    cout << "Created the nodes" << endl;
-    addNode(root, one);
-    addNode(root, two);
-    addNode(root, three);
-    addNode(root, four);
-    addNode(root, five);
-    addNode(root, six);
-    */
+/*
     for(int ii = 1; ii < 7; ii++) {
         addNode(root, ii);
     }
     addNode(root, 3);
+*/
+    addNode(root, 7);
+    addNode(root, 3);
+    addNode(root, 1);
+    addNode(root, 5);
+    addNode(root, 11);
+    addNode(root, 4);
+    addNode(root, 9);
+    addNode(root, 6);
+    addNode(root, 8);
+    addNode(root, 13);
+    addNode(root, 12);
+    addNode(root, 14);
     return root;
 }
 
 /**
  * Prints out a representtation of a binary search tree
  * 
+ * This is particularly interesting since it requires 
+ * traversing the tree in a breadth-first manner rather than
+ * a depth-first manner as we have been up until now.
+ * Some good references:
+ * https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c
+ * 
  * @param rootNode is a pointer to the root node
  */
 void printTree(BTNode* rootNode) {
+    queue<BTNode*> todo; // queue of nodes left to visit
+    BTNode* cur;   // current node
+    BTNode* last;  // last node
+    queue<int> depth; // keeps track of the depth of each node
+    int curDepth; // depth of the previous node
+    int prevDepth; // depth of the previous node
+    todo.push(rootNode); // start the queue with the rootNode
+    depth.push(0); // root node is at depth 0
 
+    while(!todo.empty()) {
+        cur = todo.front(); // collect the first node in the queue
+        curDepth = depth.front();
+        if(curDepth > prevDepth) { // next row of nodes encountered
+            cout << endl;
+        }
+        // print the current node
+        cout << curDepth << '-' << cur->nodeName() << ":" << cur->nodeData() << '\t';
+        // add children to the list
+        if(cur->left != NULL) {
+            todo.push(cur->left);
+            depth.push(curDepth + 1);
+        }
+        if(cur->right != NULL) {
+            todo.push(cur->right);
+            depth.push(curDepth + 1);
+        }
+        // remove the first node from the queue
+        todo.pop(); 
+        prevDepth = depth.front();
+        depth.pop();
+    }
+    cout << endl;
 }
 
+
+/**
+ * Print a binary tree
+ * 
+ * This example is modified from:
+ * https://stackoverflow.com/a/51730733
+ * 
+ * @param prefix is a string of characters to start the line with
+ * @param node is the current node being printed
+ * @param isLeft bool true if the node is a left node
+ */
+void printBT(const string& prefix, BTNode* node, bool isLeft)
+{
+    if( node != NULL )
+    {
+        cout << prefix;
+
+        cout << (isLeft ? "|--" : "--" );
+
+        // print the value of the node
+        cout << node->nodeName() << ':' << node->nodeData() << std::endl;
+
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "|   " : "    "), node->left, true);
+        printBT( prefix + (isLeft ? "|   " : "    "), node->right, false);
+    }
+}
+
+/**
+ * An overload to simplify calling printBT
+ * 
+ * @param node is the root node of the tree to be printed
+ */
+void printBT(BTNode* node)
+{
+    printBT("", node, false);
+}
 
 int main(int, char**) {
     BTNode* rootNode = new BTNode(0); // pointer to the root node
     genExampleTree(rootNode);
+    //printTree(rootNode);
+    printBT(rootNode);
 }

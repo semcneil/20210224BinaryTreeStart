@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['main_6',['main',['../main_8cpp.html#a2c3f6775325c30275d11c6abee2db6a0',1,'main.cpp']]],
-  ['main_2ecpp_7',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['left_7',['left',['../classBTNode.html#a62eff0c4088781b869efeb959613f679',1,'BTNode']]]
 ];

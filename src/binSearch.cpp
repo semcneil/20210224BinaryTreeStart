@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <queue>
 using namespace std;
 
 /**
@@ -36,16 +37,16 @@ public:
     /**
      * This reports the node's name
      */
-  char nodeName() {
-      return(objName);
-  }
+    char nodeName() {
+        return(objName);
+    }
 
     /**
      * This reports the node's data
      */
-  char nodeData() {
-      return(data);
-  }
+    int nodeData() {
+        return(data);
+    }
 
 private:
   char objName; // The object number created
@@ -115,24 +116,12 @@ BTNode* addNode(BTNode* rootNode, int dataval) {
  * It is a bit of a hack.
  */
 BTNode* genExampleTree(BTNode* root) {
-/*    BTNode* one = new BTNode(1);
-    BTNode* two = new BTNode(2);
-    BTNode* three = new BTNode(3);
-    BTNode* four = new BTNode(4);
-    BTNode* five = new BTNode(5);
-    BTNode* six = new BTNode(6);
-    cout << "Created the nodes" << endl;
-    addNode(root, one);
-    addNode(root, two);
-    addNode(root, three);
-    addNode(root, four);
-    addNode(root, five);
-    addNode(root, six);
-    */
-    for(int ii = 1; ii < 7; ii++) {
-        addNode(root, ii);
+    //int inData[] = {1,2,3,4,5,6,7};
+    int inData[] = {4,6,5,7,2,1,3};
+    int classData[] = {1,3,4,5,6,7,8,9,11,12,13,14};
+    for(int ii = 0; ii < 7; ii++) {
+        addNode(root, inData[ii]);
     }
-    addNode(root, 3);
     return root;
 }
 
@@ -142,11 +131,72 @@ BTNode* genExampleTree(BTNode* root) {
  * @param rootNode is a pointer to the root node
  */
 void printTree(BTNode* rootNode) {
+    queue<BTNode*> todo; // the queue of nodes left to visit
+    BTNode* cur; // current node
+    BTNode* prev; // The previous node
 
+    todo.push(rootNode);
+
+    while(!todo.empty()) {
+        cur = todo.front();
+        // Print current node
+        cout << cur->nodeName() << ':' << cur->nodeData() << '\t';
+        // add cur->left to queue
+        if(cur->left != NULL) {
+            todo.push(cur->left);
+        }
+        // add cur->right to queue
+        if(cur->right != NULL) {
+            todo.push(cur->right);
+        }
+        // remove cur from queue
+        todo.pop();
+    }
+    cout << endl;
+}
+
+/**
+ * Print a binary tree
+ * 
+ * This example is modified from:
+ * https://stackoverflow.com/a/51730733
+ * 
+ * @param prefix is a string of characters to start the line with
+ * @param node is the current node being printed
+ * @param isLeft bool true if the node is a left node
+ */
+void printBT(const string& prefix, BTNode* node, bool isLeft)
+{
+    if( node != NULL )
+    {
+        cout << prefix;
+
+        cout << (isLeft ? "├──" : "└──" );
+
+        // print the value of the node
+        //cout << node->nodeName() << ':' << node->nodeData() << std::endl;
+        cout << node->nodeData() << std::endl;
+
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
+        printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
+    }
+}
+
+/**
+ * An overload to simplify calling printBT
+ * 
+ * @param node is the root node of the tree to be printed
+ */
+void printBT(BTNode* node)
+{
+    printBT("", node, false);
 }
 
 
 int main(int, char**) {
     BTNode* rootNode = new BTNode(0); // pointer to the root node
     genExampleTree(rootNode);
+    printBT(rootNode);
+    printTree(rootNode);
 }
